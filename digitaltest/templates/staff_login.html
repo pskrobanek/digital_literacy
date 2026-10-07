@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Staff Login</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+
+<body>
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-narrow">
+            <p class="portal-kicker" data-i18n="medicalStaffAccess">Medical Staff Access</p>
+            <h1 data-i18n="patientDashboardLogin">Patient Dashboard Login</h1>
+            <p data-i18n="staffLoginDesc">Enter your doctor details and the patient's birth number to open that patient's dashboard.</p>
+
+            {% if messages %}
+            <div class="portal-messages">
+                {% for message in messages %}
+                <div class="portal-alert">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" class="portal-form" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="portal-alert">
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="portal-form-group">
+                    <label for="{{ form.staff_first.id_for_label }}" data-i18n="staffFirstName">Staff First Name</label>
+                    {{ form.staff_first }}
+                    {% if form.staff_first.errors %}
+                    <span class="portal-error">{{ form.staff_first.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="portal-form-group">
+                    <label for="{{ form.staff_last.id_for_label }}" data-i18n="staffLastName">Staff Last Name</label>
+                    {{ form.staff_last }}
+                    {% if form.staff_last.errors %}
+                    <span class="portal-error">{{ form.staff_last.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="portal-form-group">
+                    <label for="{{ form.staff_email.id_for_label }}" data-i18n="doctorEmail">Doctor Email</label>
+                    {{ form.staff_email }}
+                    {% if form.staff_email.errors %}
+                    <span class="portal-error">{{ form.staff_email.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="portal-form-group">
+                    <label for="{{ form.patient_birth_number.id_for_label }}" data-i18n="patientBirthNumber">Patient Birth Number</label>
+                    <div class="password-wrapper">
+                        {{ form.patient_birth_number }}
+                        <button type="button" class="password-toggle" data-target="{{ form.patient_birth_number.id_for_label }}" aria-label="Show birth number" aria-pressed="false">
+                            <svg class="eye-icon eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg class="eye-icon eye-closed" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a19.6 19.6 0 0 1 4.22-5.19"/><path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a19.7 19.7 0 0 1-3.17 4.19"/><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                        </button>
+                    </div>
+                    {% if form.patient_birth_number.errors %}
+                    <span class="portal-error">{{ form.patient_birth_number.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="portal-btn portal-btn-primary" data-i18n="openPatientDashboard">Open Patient Dashboard</button>
+            </form>
+
+            <div class="portal-inline-actions">
+                <a href="{% url 'landing' %}" class="portal-btn portal-btn-secondary" data-i18n="back">Back</a>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'digitaltest/js/password-toggle.js' %}"></script>
+    <script src="{% static 'digitaltest/js/lang-toggle.js' %}"></script>
+</body>
+
+</html>

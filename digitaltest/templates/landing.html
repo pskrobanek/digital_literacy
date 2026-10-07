@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="landingPageTitle">TheraHub Nicosia</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+
+<body>
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+    <main class="portal-shell">
+        <section class="portal-card">
+            <p class="portal-kicker" data-i18n="landingKicker">TheraHub Nicosia</p>
+            <h1 data-i18n="landingHeadline">Digital Literacy Evaluation Platform</h1>
+            <p data-i18n="landingDescription">
+                This website is used to evaluate technological literacy through a short questionnaire and an interactive test.
+                Patients can register and complete the assessment workflow, while medical staff can log in to view a specific
+                patient's recorded scores.
+            </p>
+            <div class="portal-actions">
+                <a href="{% url 'signup' %}" class="portal-btn portal-btn-primary" data-i18n="patientSignup">Patient Signup</a>
+                <a href="{% url 'staff_login' %}" class="portal-btn portal-btn-secondary" data-i18n="medicalStaffLogin">Medical Staff Login</a>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'digitaltest/js/lang-toggle.js' %}"></script>
+</body>
+
+</html>

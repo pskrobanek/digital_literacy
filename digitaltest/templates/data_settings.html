@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Settings — TheraHub</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+<body>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-narrow">
+            <p class="portal-kicker">Your Privacy</p>
+            <h1>Data Settings</h1>
+
+            <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 12px;">
+                <div>
+                    <p style="margin: 0 0 8px; font-size: 0.9rem; color: #444;">Download a copy of all personal data we hold about you in machine-readable JSON format.</p>
+                    <a href="{% url 'export_data' %}" class="portal-btn portal-btn-secondary">Download My Data</a>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid #e8e8e8; margin: 4px 0;">
+
+                <div>
+                    <p style="margin: 0 0 8px; font-size: 0.9rem; color: #444;">Permanently delete your account and all associated data. This cannot be undone.</p>
+                    <a href="{% url 'delete_account' %}" class="portal-btn portal-btn-danger">Delete My Data</a>
+                </div>
+            </div>
+
+            <div class="portal-actions" style="margin-top: 2rem;">
+                <a href="{% url 'all_tasks_complete' %}" class="portal-btn portal-btn-secondary">Back</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

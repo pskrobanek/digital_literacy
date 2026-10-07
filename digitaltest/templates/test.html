@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Literacy Test</title>
+    <link rel="stylesheet" href="{% static 'digitaltest/css/test.css' %}">
+</head>
+<body data-complete-url="{% url 'all_tasks_complete' %}" data-submit-url="{% url 'submit_results' %}" data-test-time-limit-ms="120000">
+    <!-- Discard / Logout -->
+    <div class="discard-btn-container">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="discard-btn" id="discard-btn">Discard</button>
+        </form>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+
+    <div class="side-timer" id="side-timer" style="display: none;">
+        <div class="test-timer-label" data-i18n="timeRemainingLabel">Time Remaining</div>
+        <div class="test-timer-value" id="test-timer-value">02:00</div>
+        <div class="test-timer-note" data-i18n="timeLimitNote">The test will automatically finish after 2 minutes. Incomplete tasks will be marked blank.</div>
+    </div>
+
+    <div class="test-wrapper">
+
+        <!-- Instruction Bar -->
+        <div class="instruction-bar" id="instruction-bar" style="display: none;">
+            <div class="task-counter" id="task-counter"></div>
+            <div class="instruction-text" id="instruction-text"></div>
+        </div>
+
+        <!-- Test Container -->
+        <div class="test-container" id="test-container">
+
+            <!-- Start Screen -->
+            <div class="start-screen" id="start-screen">
+                <h2 data-i18n="startTitle">Digital Literacy Test</h2>
+                <p data-i18n="startDesc">This short test will check your ability to interact with common items on a computer screen. Follow the instructions for each task.</p>
+                <button class="start-test-btn" id="start-test-btn" data-i18n="startBtn">Begin Test</button>
+            </div>
+
+            <!-- Task 1: Click the big green button -->
+            <div id="task-1" class="task-panel">
+                <button class="big-start-btn target-btn" data-i18n="task1Btn">START</button>
+            </div>
+
+            <!-- Task 2: Click the correct button -->
+            <div id="task-2" class="task-panel">
+                <div class="button-row">
+                    <button class="choice-btn btn-cancel" data-i18n="task2Cancel">Cancel</button>
+                    <button class="choice-btn btn-continue" data-i18n="task2Continue">Continue</button>
+                    <button class="choice-btn btn-goback" data-i18n="task2GoBack">Go Back</button>
+                </div>
+            </div>
+
+            <!-- Task 3: Click the correct colored dot -->
+            <div id="task-3" class="task-panel">
+                <div class="dot-grid">
+                    <div class="color-dot dot-red"></div>
+                    <div class="color-dot dot-green"></div>
+                    <div class="color-dot dot-blue"></div>
+                    <div class="color-dot dot-yellow"></div>
+                    <div class="color-dot dot-purple"></div>
+                    <div class="color-dot dot-orange"></div>
+                </div>
+            </div>
+
+            <!-- Task 4: Click the email icon -->
+            <div id="task-4" class="task-panel">
+                <div class="icon-row">
+                    <div class="icon-target icon-phone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <div class="icon-target icon-email">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                        </svg>
+                    </div>
+                    <div class="icon-target icon-camera">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                    </div>
+                    <div class="icon-target icon-printer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 6 2 18 2 18 9"/>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                            <rect x="6" y="14" width="12" height="8"/>
+                        </svg>
+                    </div>
+                    <div class="icon-target icon-settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 5: Click the link -->
+            <div id="task-5" class="task-panel">
+                <div class="text-block">
+                    <p data-i18n-html="task5Text">Welcome to our website. We offer a variety of services to help you get started with technology. If you need assistance, please visit our <a href="#" class="target-link" onclick="return false;">help center</a> for more information. Our team is available Monday through Friday to answer your questions.</p>
+                </div>
+            </div>
+
+            <!-- Task 6: Navigation menu -->
+            <div id="task-6" class="task-panel">
+                <nav class="sim-nav">
+                    <button class="nav-item nav-home" data-i18n="task6Home">Home</button>
+                    <button class="nav-item nav-about" data-i18n="task6About">About</button>
+                    <button class="nav-item nav-services" data-i18n="task6Services">Services</button>
+                    <button class="nav-item nav-contact" data-i18n="task6Contact">Contact</button>
+                    <button class="nav-item nav-help" data-i18n="task6Help">Help</button>
+                </nav>
+            </div>
+
+            <!-- Task 7: Close the popup -->
+            <div id="task-7" class="task-panel">
+                <div class="modal-overlay">
+                    <div class="modal-box">
+                        <div class="modal-header">
+                            <h3 data-i18n="task7Title">Notification</h3>
+                            <button class="modal-close-btn">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p data-i18n="task7Body">Thank you for visiting. This is a sample popup message. You can close this window to continue.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-dismiss-btn" data-i18n="task7Dismiss">Dismiss</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 8: Type the displayed word -->
+            <div id="task-8" class="task-panel">
+                <div class="typing-task">
+                    <p class="typing-label" data-i18n="task8Label">Type this word:</p>
+                    <div class="typing-word" id="typing-word"></div>
+                    <input type="text" class="typing-input" id="typing-input"
+                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                    <button class="task-submit-btn" id="typing-submit-btn" data-i18n="taskSubmitBtn">Submit</button>
+                </div>
+            </div>
+
+            <!-- Task 9: Select a specific date -->
+            <div id="task-9" class="task-panel">
+                <div class="date-task">
+                    <p class="date-label" data-i18n="task9Label">Select this date:</p>
+                    <div class="date-display" id="date-display"></div>
+                    <input type="date" class="date-input" id="date-input" />
+                    <p class="date-hint" data-i18n="task9Hint">Your device date format may vary. Select the same calendar date.</p>
+                    <button class="task-submit-btn" id="date-submit-btn" data-i18n="taskSubmitBtn">Submit</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="results-screen" id="results-screen">
+                <div class="results-summary-panel" id="results-summary-panel">
+                    <div class="results-title" id="results-title" data-i18n="resultsTitle">Final Score</div>
+                    <div class="results-score" id="results-score"></div>
+                    <div class="results-label" id="results-label"></div>
+                    <div class="results-subscores" id="results-subscores">
+                        <div class="subscore-card">
+                            <div class="subscore-label" id="correct-tasks-label" data-i18n="correctTasksLabel">Correct Tasks</div>
+                            <div class="subscore-value" id="correct-tasks-value"></div>
+                        </div>
+                        <div class="subscore-card">
+                            <div class="subscore-label" id="speed-label" data-i18n="speedLabel">Speed</div>
+                            <div class="subscore-value" id="speed-value"></div>
+                        </div>
+                        <div class="subscore-card">
+                            <div class="subscore-label" id="misclick-distance-label" data-i18n="misclickDistanceLabel">Avg Misclick Distance</div>
+                            <div class="subscore-value" id="misclick-distance-value"></div>
+                        </div>
+                        <div class="subscore-card">
+                            <div class="subscore-label" id="typing-duration-label" data-i18n="typingDurationLabel">Typing Time</div>
+                            <div class="subscore-value" id="typing-duration-value"></div>
+                        </div>
+                        <div class="subscore-card">
+                            <div class="subscore-label" id="typing-accuracy-label" data-i18n="typingAccuracyLabel">Typing Accuracy</div>
+                            <div class="subscore-value" id="typing-accuracy-value"></div>
+                        </div>
+                    </div>
+                    <a href="{% url 'all_tasks_complete' %}" class="results-home-link" data-i18n="resultsHome">Finish</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container" id="progress-bar-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-label" id="progress-label"></div>
+        </div>
+
+    </div>
+
+    <script src="{% static 'digitaltest/js/test.js' %}"></script>
+</body>
+</html>

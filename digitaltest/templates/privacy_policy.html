@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — TheraHub</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+    <style>
+        .privacy-body h2 { margin-top: 1.5rem; font-size: 1.05rem; }
+        .privacy-body p, .privacy-body li { font-size: 0.9rem; line-height: 1.6; color: #444; }
+        .privacy-body ul { padding-left: 1.25rem; }
+    </style>
+</head>
+<body>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-wide">
+            <p class="portal-kicker">TheraHub Nicosia</p>
+            <h1>Privacy Policy</h1>
+            <p style="font-size:0.8rem; color:#888;">Version 1.0</p>
+
+            <div class="privacy-body">
+                <h2>1. Data Controller</h2>
+                <p>
+                    The data controller responsible for your personal data is
+                    <strong>TheraHub</strong>, reachable at
+                    <strong>[CONTACT EMAIL]</strong>.
+                </p>
+
+                <h2>2. What data we collect</h2>
+                <ul>
+                    <li>First and last name</li>
+                    <li>Date of birth</li>
+                    <li>Birth number (stored as a one-way cryptographic hash — the original value is never saved)</li>
+                    <li>Diagnosis (optional, special category health data under GDPR Art. 9)</li>
+                    <li>Digital literacy test results (speed, accuracy, typing metrics)</li>
+                    <li>Technology usage survey responses</li>
+                    <li>Consent timestamp and IP address at the time of registration</li>
+                </ul>
+
+                <h2>3. Lawful basis for processing</h2>
+                <p>
+                    We process your personal data on the basis of your explicit consent (Art. 6(1)(a) GDPR).
+                    For health-related data (diagnosis and cognitive test results), we rely on explicit consent
+                    under Art. 9(2)(a) GDPR.
+                    You may withdraw consent at any time by deleting your account (see Section 6).
+                </p>
+
+                <h2>4. Purpose of processing</h2>
+                <p>
+                    Your data is collected solely for the purpose of assessing digital literacy as part of
+                    a clinical evaluation. Results are reviewed by authorised medical staff at
+                    TheraHub only.
+                </p>
+
+                <h2>5. Recipients of your data</h2>
+                <p>
+                    Your data is accessible to authorised medical staff at TheraHub.
+                    We use Render (render.com) as our hosting provider, acting as a data processor.
+                    No data is sold or shared with third parties for marketing purposes.
+                </p>
+
+                <h2>6. Your rights</h2>
+                <ul>
+                    <li><strong>Right of access (Art. 15):</strong> Download a copy of your data at any time from the completion page.</li>
+                    <li><strong>Right to erasure (Art. 17):</strong> Delete your account and all associated data from the completion page.</li>
+                    <li><strong>Right to rectification (Art. 16):</strong> Contact us at [CONTACT EMAIL] to correct inaccurate data.</li>
+                    <li><strong>Right to portability (Art. 20):</strong> Your data export is provided in machine-readable JSON format.</li>
+                    <li><strong>Right to withdraw consent (Art. 7):</strong> Delete your account at any time; this constitutes withdrawal of consent.</li>
+                    <li><strong>Right to lodge a complaint:</strong> You may complain to your national data protection authority.</li>
+                </ul>
+
+                <h2>7. Retention period</h2>
+                <p>
+                    Patient records are retained for a maximum of 2 years from the date of registration,
+                    after which they are automatically deleted.
+                    Staff access logs are retained for a maximum of 90 days.
+                </p>
+
+                <h2>8. Security</h2>
+                <p>
+                    All data is transmitted over HTTPS. Birth numbers are never stored in plain text;
+                    only a keyed cryptographic hash is kept. Access to patient data by staff is logged.
+                </p>
+
+                <h2>9. Contact</h2>
+                <p>
+                    For any privacy-related requests or questions, contact us at
+                    <a href="mailto:[CONTACT EMAIL]">[CONTACT EMAIL]</a>.
+                </p>
+            </div>
+
+            <div class="portal-actions" style="margin-top: 2rem;">
+                <a href="javascript:history.back()" class="portal-btn portal-btn-secondary">Back</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

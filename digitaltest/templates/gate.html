@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="gatePageTitle">Site Access</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+
+<body>
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-narrow">
+            <p class="portal-kicker" data-i18n="restrictedAccess">Restricted Access</p>
+            <h1 data-i18n="enterPassword">Enter Password</h1>
+            <p data-i18n="gateDescription">This site requires a password to proceed.</p>
+
+            {% if messages %}
+            <div class="portal-messages">
+                {% for message in messages %}
+                <div class="portal-alert">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" class="portal-form" novalidate>
+                {% csrf_token %}
+                <div class="portal-form-group">
+                    <label for="password" data-i18n="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" data-i18n-placeholder="passwordPlaceholder" required />
+                </div>
+                <button type="submit" class="portal-btn portal-btn-primary" data-i18n="enter">Enter</button>
+            </form>
+        </section>
+    </main>
+    <script src="{% static 'digitaltest/js/lang-toggle.js' %}"></script>
+</body>
+
+</html>

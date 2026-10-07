@@ -1,0 +1,15 @@
+asgiref==3.11.1
+gunicorn==23.0.0
+whitenoise==6.9.0
+certifi==2026.2.25
+charset-normalizer==3.4.4
+Django==6.0.2
+dotenv==0.9.9
+idna==3.11
+psycopg==3.3.3
+psycopg-c==3.3.3
+python-dotenv==1.2.2
+requests==2.32.5
+sqlparse==0.5.5
+typing_extensions==4.15.0
+urllib3==2.6.3

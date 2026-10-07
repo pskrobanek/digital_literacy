@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tasks Complete</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            <h1>All Tasks Complete</h1>
+            <p>You have finished the survey and the test. Thank you.</p>
+        </div>
+
+        <div style="text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+            <a href="{% url 'landing' %}" class="btn-submit" style="display: inline-block; text-align: center; text-decoration: none; background: #e6e9f9; color: #333;">Back</a>
+            <a href="{% url 'data_settings' %}" class="btn-submit" style="display: inline-block; text-align: center; text-decoration: none; background: #e6e9f9; color: #333;">Data Settings</a>
+        </div>
+    </div>
+</body>
+
+</html>

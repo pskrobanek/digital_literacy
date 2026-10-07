@@ -1,0 +1,439 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f6f8ff 0%, #eef2ff 100%);
+    color: #1d2433;
+}
+
+/* Language selector (top-right) — shared with signup layout */
+.lang-selector {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 200;
+}
+
+.lang-select {
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23757575' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    font-family: inherit;
+}
+
+.lang-select:hover {
+    border-color: #bdbdbd;
+}
+
+.portal-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.portal-card {
+    width: 100%;
+    max-width: 760px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 34px;
+    box-shadow: 0 20px 48px rgba(9, 17, 48, 0.12);
+}
+
+.portal-card-narrow {
+    max-width: 560px;
+}
+
+.portal-card-wide {
+    max-width: 920px;
+}
+
+.portal-kicker {
+    margin: 0 0 8px;
+    color: #4b5ccf;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+h1 {
+    margin: 0 0 12px;
+    font-size: 30px;
+}
+
+p {
+    margin: 0;
+    line-height: 1.6;
+    color: #4b556b;
+}
+
+.portal-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.portal-btn {
+    display: inline-block;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.portal-btn-primary {
+    color: #ffffff;
+    background: #4b5ccf;
+}
+
+.portal-btn-secondary {
+    color: #24304d;
+    background: #e8edff;
+}
+
+.portal-btn-danger {
+    color: #ffffff;
+    background: #bf2446;
+}
+
+.portal-form {
+    margin-top: 20px;
+}
+
+.portal-form-group {
+    margin-bottom: 16px;
+}
+
+.portal-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    border: 1px solid #d3dbf5;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 15px;
+}
+
+/* Password / birth-number toggle styles (embedded button inside input) */
+.portal-form-group .password-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.portal-form-group .password-wrapper .form-control {
+    padding-right: 44px;
+    box-sizing: border-box;
+}
+.portal-form-group .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #667085;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    z-index: 3;
+}
+.portal-form-group .password-toggle:hover {
+    color: #4b5ccf;
+}
+.portal-form-group .password-toggle .eye-icon {
+    display: block;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #4b5ccf;
+    box-shadow: 0 0 0 3px rgba(75, 92, 207, 0.15);
+}
+
+.portal-error {
+    color: #bf2446;
+    font-size: 13px;
+}
+
+.portal-messages {
+    margin-top: 14px;
+}
+
+.portal-alert {
+    border: 1px solid #ffc9cf;
+    color: #8c1c36;
+    background: #ffe9ec;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.portal-link {
+    color: #4b5ccf;
+    text-decoration: none;
+}
+
+.portal-inline-actions {
+    margin-top: 18px;
+}
+
+.portal-section-title {
+    margin: 18px 0 10px;
+    font-size: 16px;
+    color: #33405f;
+}
+
+.portal-patient-meta {
+    margin-top: 16px;
+    margin-bottom: 18px;
+    display: grid;
+    gap: 6px;
+    color: #33405f;
+}
+
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.portal-stat-card {
+    margin: 0;
+    border: 1px solid #dde4fb;
+    border-radius: 12px;
+    padding: 14px;
+    background: #f9fbff;
+}
+
+.portal-stat-card h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #607096;
+}
+
+.portal-stat-card p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2a44;
+}
+
+.portal-empty-state {
+    margin-top: 20px;
+    border: 1px dashed #ced7f6;
+    border-radius: 12px;
+    padding: 16px;
+    color: #485777;
+    background: #f6f8ff;
+}
+
+.portal-caption {
+    margin-top: 12px;
+    color: #657493;
+    font-size: 13px;
+}
+
+.portal-formula-box {
+    margin-top: 14px;
+    border: 1px solid #d8e1fb;
+    border-radius: 14px;
+    background: #f8faff;
+    overflow: hidden;
+}
+
+.portal-formula-box > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 14px 16px;
+    font-weight: 700;
+    color: #33405f;
+    background: linear-gradient(180deg, #fbfcff 0%, #f2f5ff 100%);
+    border-bottom: 1px solid #e2e9fb;
+}
+
+.portal-formula-box > summary::-webkit-details-marker {
+    display: none;
+}
+
+.portal-formula-box > summary::after {
+    content: "⌄";
+    float: right;
+    color: #6a78a8;
+    transition: transform 0.2s ease;
+}
+
+.portal-formula-box[open] > summary::after {
+    transform: rotate(180deg);
+}
+
+.portal-formula-content {
+    padding: 16px;
+    display: grid;
+    gap: 14px;
+    --formula-label-col: 210px;
+    --formula-sep-col: 36px;
+}
+
+.portal-formula-card {
+    border: 1px solid #e1e7fb;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 14px;
+}
+
+.portal-formula-table th {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #24304d;
+    white-space: normal;
+}
+
+.portal-formula-table code {
+    display: block;
+    color: #1f2a44;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.portal-formula-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    table-layout: fixed;
+}
+
+.portal-formula-table th,
+.portal-formula-table td {
+    padding: 10px 12px;
+    vertical-align: top;
+    background: #f8faff;
+    border-top: 1px solid #edf1fd;
+    border-bottom: 1px solid #edf1fd;
+}
+
+.portal-formula-table th {
+    width: var(--formula-label-col);
+    border-left: 1px solid #edf1fd;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    color: #24304d;
+}
+
+.portal-formula-sep {
+    width: var(--formula-sep-col);
+    text-align: center;
+    border-right: none;
+    border-left: none;
+    color: #24304d;
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.portal-formula-expr {
+    border-right: 1px solid #edf1fd;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.portal-formula-main th,
+.portal-formula-main td {
+    background: #eef3ff;
+}
+
+.portal-formula-main th {
+    font-size: 13px;
+}
+
+.portal-formula-group-title th {
+    border: none;
+    background: transparent;
+    padding: 2px 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #33405f;
+}
+
+.portal-formula-divider-row td {
+    border: none;
+    background: transparent;
+    padding: 16px 0 4px;
+}
+
+.portal-formula-table tr:first-child th,
+.portal-formula-table tr:first-child td {
+    border-top: 1px solid #edf1fd;
+}
+
+.portal-formula-table tr:last-child th,
+.portal-formula-table tr:last-child td {
+    border-bottom: 1px solid #edf1fd;
+}
+
+.portal-history-list {
+    margin-top: 10px;
+    border: 1px solid #dde4fb;
+    border-radius: 12px;
+    background: #f9fbff;
+    overflow: hidden;
+}
+
+.portal-history-item {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e8edff;
+    color: #33405f;
+    font-size: 14px;
+}
+
+.portal-history-item:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 640px) {
+    .portal-card {
+        padding: 22px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .portal-formula-content {
+        padding: 12px;
+    }
+}

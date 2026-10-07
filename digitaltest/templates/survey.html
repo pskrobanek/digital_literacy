@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Technology Usage Survey</title>
+    <link rel="stylesheet" href="{% static 'digitaltest/css/test.css' %}">
+</head>
+<body data-submit-url="{% url 'submit_survey' %}">
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+
+    <!-- Discard / Logout -->
+    <div class="discard-btn-container">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="discard-btn" id="discard-btn">Discard</button>
+        </form>
+    </div>
+
+    <div class="test-wrapper">
+
+        <!-- Instruction Bar -->
+        <div class="instruction-bar" id="instruction-bar" style="display: none;">
+            <div class="task-counter" id="task-counter"></div>
+            <div class="instruction-text" id="instruction-text"></div>
+        </div>
+
+        <!-- Test Container -->
+        <div class="test-container" id="test-container">
+
+            <!-- Task 1: Devices used daily (multi-select) -->
+            <div id="task-1" class="task-panel">
+                <div class="survey-question">
+                    <div class="options-container">
+                        <label class="option-label checkbox-label">
+                            <input type="checkbox" name="q1" value="mobile_phone">
+                            <span class="custom-checkbox"></span>
+                            <span data-i18n="q1Opt1">Mobile phone</span>
+                        </label>
+                        <label class="option-label checkbox-label">
+                            <input type="checkbox" name="q1" value="mobile_tablet">
+                            <span class="custom-checkbox"></span>
+                            <span data-i18n="q1Opt2">Mobile tablet</span>
+                        </label>
+                        <label class="option-label checkbox-label">
+                            <input type="checkbox" name="q1" value="desktop_laptop">
+                            <span class="custom-checkbox"></span>
+                            <span data-i18n="q1Opt3">Desktop/Laptop</span>
+                        </label>
+                        <label class="option-label checkbox-label">
+                            <input type="checkbox" name="q1" value="smart_watch">
+                            <span class="custom-checkbox"></span>
+                            <span data-i18n="q1Opt4">Smart Watch</span>
+                        </label>
+                        <label class="option-label checkbox-label">
+                            <input type="checkbox" name="q1" value="none">
+                            <span class="custom-checkbox"></span>
+                            <span data-i18n="q1Opt5">None</span>
+                        </label>
+                    </div>
+                    <div class="button-row-nav">
+                        <button class="next-btn target-btn" data-i18n="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 2: Struggling with technology (single choice) -->
+            <div id="task-2" class="task-panel">
+                <div class="survey-question">
+                    <div class="options-container">
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q2" value="give_up">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q2Opt1">Give up</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q2" value="ask_help">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q2Opt2">Ask someone for help or to demonstrate</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q2" value="take_break">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q2Opt3">Take a break and try again later</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q2" value="press_buttons">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q2Opt4">Press buttons to see what they do</span>
+                        </label>
+                    </div>
+                    <div class="button-row-nav">
+                        <button class="back-btn" data-i18n="backBtn">Back</button>
+                        <button class="next-btn target-btn" data-i18n="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 3: Who helps you (single choice) -->
+            <div id="task-3" class="task-panel">
+                <div class="survey-question">
+                    <div class="options-container">
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q3" value="family">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q3Opt1">Family</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q3" value="friends">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q3Opt2">Friends</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q3" value="caregivers">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q3Opt3">Caregivers</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q3" value="professionals">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q3Opt4">Professionals (IT/support staff)</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q3" value="no_one">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q3Opt5">No one</span>
+                        </label>
+                    </div>
+                    <div class="button-row-nav">
+                        <button class="back-btn" data-i18n="backBtn">Back</button>
+                        <button class="next-btn target-btn" data-i18n="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task 4: How often can you get help (single choice) -->
+            <div id="task-4" class="task-panel">
+                <div class="survey-question">
+                    <div class="options-container">
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q4" value="immediately">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q4Opt1">Immediately / on demand</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q4" value="within_day">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q4Opt2">Within a day</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q4" value="within_few_days">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q4Opt3">Within a few days</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q4" value="once_a_week">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q4Opt4">About once a week</span>
+                        </label>
+                        <label class="option-label radio-label">
+                            <input type="radio" name="q4" value="rarely">
+                            <span class="custom-radio"></span>
+                            <span data-i18n="q4Opt5">Rarely or almost never</span>
+                        </label>
+                    </div>
+                    <div class="button-row-nav">
+                        <button class="back-btn" data-i18n="backBtn">Back</button>
+                        <button class="submit-btn target-btn" data-i18n="submitBtn">Submit Survey</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container" id="progress-bar-container" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-label" id="progress-label"></div>
+        </div>
+
+    </div>
+
+    <script src="{% static 'digitaltest/js/survey.js' %}"></script>
+</body>
+</html>

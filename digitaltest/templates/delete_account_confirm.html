@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Your Data — TheraHub</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+<body>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-narrow">
+            <p class="portal-kicker">Your Privacy</p>
+            <h1>Delete Your Data</h1>
+            <p>
+                This will permanently erase your account, test results, survey responses,
+                and all other personal data we hold about you. This action cannot be undone.
+            </p>
+
+            <form method="post" action="{% url 'delete_account' %}" style="margin-top: 1.5rem;">
+                {% csrf_token %}
+                <div class="portal-actions">
+                    <button type="submit" class="portal-btn portal-btn-danger">Confirm Deletion</button>
+                    <a href="{% url 'all_tasks_complete' %}" class="portal-btn portal-btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

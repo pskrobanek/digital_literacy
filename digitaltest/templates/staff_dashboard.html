@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/portal.css' %}">
+</head>
+
+<body>
+    <div class="lang-selector">
+        <select class="lang-select" id="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="cs">Čeština</option>
+        </select>
+    </div>
+    <main class="portal-shell">
+        <section class="portal-card portal-card-wide">
+            <p class="portal-kicker">Medical Staff Dashboard</p>
+            <h1>Patient Results</h1>
+
+            {% if staff_member %}
+            <div class="portal-patient-meta">
+                <div><strong data-i18n="staffLabel">Staff:</strong> {{ staff_member.first }} {{ staff_member.last }}</div>
+                <div><strong data-i18n="staffEmailLabel">Staff Email:</strong> {{ staff_member.email }}</div>
+            </div>
+            {% endif %}
+
+            {% if patient %}
+            <div class="portal-patient-meta">
+                <div><strong data-i18n="patientLabel">Patient:</strong> {{ patient.first }} {{ patient.last }}</div>
+            </div>
+
+            {% if test_result %}
+            <div class="portal-grid">
+                <article class="portal-stat-card">
+                    <h3 data-i18n="finalScore">Final Score</h3>
+                    <p>{{ test_result.result }}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="speed">Speed</h3>
+                    <p>{% if test_result.speed %}{{ test_result.speed|floatformat:2 }} s{% else %}--{% endif %}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="avgMisclickDistance">Avg Misclick Distance</h3>
+                    <p>{% if test_result.avg_misclick_distance %}{{ test_result.avg_misclick_distance|floatformat:2 }} px{% else %}--{% endif %}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="typingTime">Typing Time</h3>
+                    <p>{% if test_result.typing_duration %}{{ test_result.typing_duration|floatformat:2 }} s{% else %}--{% endif %}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="typingAccuracy">Typing Accuracy</h3>
+                    <p>{% if test_result.typing_accuracy %}{{ test_result.typing_accuracy|floatformat:0 }}%{% else %}--{% endif %}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="surveyStatus">Survey Status</h3>
+                    <p data-i18n-placeholder="surveyStatusValue">{% if survey_result %}Completed{% else %}Not completed{% endif %}</p>
+                </article>
+                <article class="portal-stat-card">
+                    <h3 data-i18n="digitalLiteracy">Digital Literacy</h3>
+                    {% if literacy_score is not None %}
+                    <p>{{ literacy_score }} <small>({{ literacy_tier }})</small></p>
+                    {% else %}
+                    <p>--</p>
+                    {% endif %}
+                </article>
+            </div>
+
+            <div class="portal-caption">
+                <span data-i18n="lastTestUpdate">Last test update:</span>
+                <span class="js-local-datetime" data-datetime="{{ test_result.date_last_taken|date:'c' }}">{{ test_result.date_last_taken|date:"Y.m.d H:i" }}</span>
+            </div>
+
+            <details class="portal-formula-box">
+                <summary data-i18n="scoringFormulas">Scoring formulas</summary>
+                <div class="portal-formula-content">
+                    <div class="portal-formula-card">
+                        <table class="portal-formula-table portal-formula-table-global">
+                            <tbody>
+                                <tr class="portal-formula-group-title">
+                                    <th colspan="3" scope="colgroup" data-i18n="finalScoreFormulas">Final score formulas</th>
+                                </tr>
+                                <tr class="portal-formula-main">
+                                    <th scope="row" data-i18n="finalScore">Final score</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_final_score">round(65 × accuracy + 15 × speed + 10 × precision + 5 × typing speed + 5 × typing accuracy)</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="accuracy">accuracy</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_accuracy">correct tasks / total tasks</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="speed">speed</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_speed">max(0, 1 - min(test time, 120) / 120)</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="precision">precision</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_precision">max(0, 1 - min(avg misclick distance, 500) / 500)</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="typingSpeed">typing speed</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_typing_speed">max(0, 1 - min(typing duration, 30) / 30)</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="typingAccuracy">typing accuracy</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_typing_accuracy">typing accuracy / 100</code></td>
+                                </tr>
+                                <tr class="portal-formula-divider-row">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr class="portal-formula-group-title">
+                                    <th colspan="3" scope="colgroup" data-i18n="digitalLiteracyFormulas">Digital literacy score formulas</th>
+                                </tr>
+                                <tr class="portal-formula-main">
+                                    <th scope="row" data-i18n="digitalLiteracyScore">Digital literacy score</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_digital_literacy">clamp(round(motor score × tech breadth × L factor × resource quality - penalty), 0, 100)</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="techBreadth">tech breadth</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_tech_breadth">0.7 + selected device weights from question 1</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="lFactor">L factor</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_l_factor">value from question 2</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="resourceQuality">resource quality</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_resource_quality">highest selected value from question 3</code></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" data-i18n="penalty">penalty</th>
+                                    <td class="portal-formula-sep">=</td>
+                                    <td class="portal-formula-expr"><code data-i18n="expr_penalty">value from question 4</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
+
+            {% if recommended_apps %}
+            <h2 class="portal-section-title" data-i18n="recommendedSoftware">Recommended Software</h2>
+            <div class="portal-history-list">
+                {% for app in recommended_apps %}
+                <div class="portal-history-item">
+                    <strong>{{ app.name }}</strong>
+                    — <span class="app-tier" data-tier="{{ app.tier }}">{{ app.tier }}</span>
+                    {% if app.note %}
+                        <div><small class="app-note" data-note="{{ app.note }}">{{ app.note }}</small></div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% if literacy_tier == 'Low' or literacy_tier == 'Medium' %}
+            <div class="portal-caption" data-i18n="highComplexityFiltered">Higher-complexity apps were filtered out based on this patient's literacy tier.</div>
+            {% endif %}
+            {% endif %}
+            {% else %}
+            <div class="portal-empty-state">
+                No test results are available yet for this patient.
+            </div>
+            {% endif %}
+            {% else %}
+            <div class="portal-empty-state">
+                Patient session is no longer available. Please log in again.
+            </div>
+            {% endif %}
+
+            {% if patient and activity_events %}
+            <h2 class="portal-section-title" data-i18n="activityLog">Activity Log</h2>
+            <div class="portal-history-list">
+                {% for event in activity_events %}
+                <div class="portal-history-item">
+                    <span data-i18n-key="{{ event.type }}">{{ event.label }}</span>
+                    <span class="js-local-datetime" data-datetime="{{ event.timestamp|date:'c' }}">
+                        {{ event.timestamp|date:"Y.m.d H:i" }}
+                    </span>
+                    <span class="activity-by">
+                        <span data-i18n="byLabel">by</span>
+                        {% if event.staff %}
+                            {{ event.staff.first }} {{ event.staff.last }} ({{ event.staff.email }})
+                        {% else %}
+                            <span data-i18n="patientLabel">patient</span>
+                        {% endif %}
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="portal-actions">
+                {% if patient %}
+                <form method="post" action="{% url 'staff_start_retake' %}" onsubmit="return confirm('Start a new test retake for {{ patient.first|escapejs }} {{ patient.last|escapejs }}? This will open a fresh test session and the next submitted result will replace the current score.');">
+                    {% csrf_token %}
+                    <button type="submit" class="portal-btn portal-btn-primary" data-i18n="startTestRetake">Start Test Retake</button>
+                </form>
+                {% endif %}
+                <form method="post" action="{% url 'staff_switch_patient' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="portal-btn portal-btn-secondary" data-i18n="switchPatient">Switch Patient</button>
+                </form>
+                <form method="post" action="{% url 'staff_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="portal-btn portal-btn-danger" data-i18n="logOut">Log Out</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script>
+        document.querySelectorAll('.js-local-datetime').forEach(function (element) {
+            var isoValue = element.dataset.datetime;
+            if (!isoValue) {
+                return;
+            }
+
+            var parsedDate = new Date(isoValue);
+            if (Number.isNaN(parsedDate.getTime())) {
+                return;
+            }
+
+            element.textContent = new Intl.DateTimeFormat(undefined, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false,
+            }).format(parsedDate);
+        });
+    </script>
+    <script src="{% static 'digitaltest/js/lang-toggle.js' %}"></script>
+</body>
+
+</html>
